@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Projects extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -17,9 +17,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'title',
+        'description',
+        'price',
+        'done_tasks',
+        'starts_at',
+        'ends_at',
+        'creator_id',
     ];
 
     /**
@@ -27,10 +31,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -38,6 +39,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'verified' => 'datetime',
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
